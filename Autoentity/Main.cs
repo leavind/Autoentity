@@ -265,85 +265,85 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                         if ((bool)dr["IsKey"] && !(bool)dr["IsIdentity"]) {
                             if (this.SqlSugarPK_CheckBox.Checked && this.SqlSugarBZL_CheckBox.Checked) {
                                 codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsPrimaryKey = true, IsIdentity = false)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = false)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else if (this.SqlSugarPK_CheckBox.Checked && !this.SqlSugarBZL_CheckBox.Checked) {
                                 codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsPrimaryKey = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else {
                                 codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        public -dbType- -colName- {{ get; set; }}
+");
                             }
                         } else if ((bool)dr["IsKey"] && (bool)dr["IsIdentity"]) {
                             if (this.SqlSugarPK_CheckBox.Checked && this.SqlSugarBZL_CheckBox.Checked) {
                                 codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else if (this.SqlSugarPK_CheckBox.Checked && !this.SqlSugarBZL_CheckBox.Checked) {
                                 codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsPrimaryKey = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else if (!this.SqlSugarPK_CheckBox.Checked && this.SqlSugarBZL_CheckBox.Checked) {
                                 codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsIdentity = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsIdentity = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else {
                                 codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        public -dbType- -colName- {{ get; set; }}
+");
                             }
                         } else if (!(bool)dr["IsKey"] && (bool)dr["IsIdentity"]) {
                             if (this.SqlSugarBZL_CheckBox.Checked) {
                                 codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsIdentity = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsIdentity = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else {
                                 codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        public -dbType- -colName- {{ get; set; }}
+");
                             }
                         } else {
                             codeString.Append($@"        
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        public -dbType- -colName- {{ get; set; }}
+");
                         }
                         Type ttttt = this.GetTypeByString(dr["DataType"].ToString());
                         if (ttttt.IsValueType && dr["AllowDBNull"].ToString() == "True") {
@@ -367,12 +367,7 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                             }
                         }
                         codeString.Replace("-colName-", this.PropCapsCount_NumericUpDown.Value > 0 ? dr["ColumnName"].ToString().SetLengthToUpperByStart((int)this.PropCapsCount_NumericUpDown.Value) : dr["ColumnName"].ToString());  //替换列名（属性名）
-                        if (zhuShi.IsNullOrWhiteSpace()) {
-                            codeString.Replace("/// <summary>", "");
-                            codeString.Replace("/// -zhuShi-", "");
-                            codeString.Replace("/// </summary>", "");
-                        } else
-                            codeString.Replace("-zhuShi-", zhuShi);
+                        codeString.Replace("-zhuShi-", zhuShi);
                     }
                     codeString.Append(@"    }
 }");
@@ -411,86 +406,86 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                         }
                         if ((bool)dr["IsKey"] && !(bool)dr["IsAutoIncrement"]) {
                             if (this.SqlSugarPK_CheckBox.Checked && this.SqlSugarBZL_CheckBox.Checked) {
-                                codeString.Append($@"                                    
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsPrimaryKey = true, IsIdentity = false)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+                                codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = false)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else if (this.SqlSugarPK_CheckBox.Checked && !this.SqlSugarBZL_CheckBox.Checked) {
-                                codeString.Append($@"                                    
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsPrimaryKey = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+                                codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else {
-                                codeString.Append($@"                                    
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+                                codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        public -dbType- -colName- {{ get; set; }}
+");
                             }
                         } else if ((bool)dr["IsKey"] && (bool)dr["IsAutoIncrement"]) {
                             if (this.SqlSugarPK_CheckBox.Checked && this.SqlSugarBZL_CheckBox.Checked) {
-                                codeString.Append($@"                                    
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+                                codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else if (this.SqlSugarPK_CheckBox.Checked && !this.SqlSugarBZL_CheckBox.Checked) {
-                                codeString.Append($@"                                    
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsPrimaryKey = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+                                codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsPrimaryKey = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else if (!this.SqlSugarPK_CheckBox.Checked && this.SqlSugarBZL_CheckBox.Checked) {
-                                codeString.Append($@"                                    
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsIdentity = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+                                codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsIdentity = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else {
-                                codeString.Append($@"                                    
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+                                codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        public -dbType- -colName- {{ get; set; }}
+");
                             }
                         } else if (!(bool)dr["IsKey"] && (bool)dr["IsAutoIncrement"]) {
                             if (this.SqlSugarBZL_CheckBox.Checked) {
-                                codeString.Append($@"                                    
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    [SugarColumn(IsIdentity = true)]
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+                                codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        [SugarColumn(IsIdentity = true)]
+        public -dbType- -colName- {{ get; set; }}
+");
                             } else {
-                                codeString.Append($@"                                    
-                                    /// <summary>
-                                    /// -zhuShi-
-                                    /// </summary>
-                                    public -dbType- -colName- {{ get; set; }}
-                            ");
+                                codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        public -dbType- -colName- {{ get; set; }}
+");
                             }
                         } else {
-                            codeString.Append($@"                                
-                                /// <summary>
-                                /// -zhuShi-
-                                /// </summary>
-                                public -dbType- -colName- {{ get; set; }}
-                        ");
+                            codeString.Append($@"        
+        /// <summary>
+        /// -zhuShi-
+        /// </summary>
+        public -dbType- -colName- {{ get; set; }}
+");
                         }
                         Type ttttt = this.GetTypeByString(dr["DataType"].ToString());
                         if (ttttt.IsValueType && dr["AllowDBNull"].ToString() == "True") {
@@ -514,12 +509,7 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                             }
                         }
                         codeString.Replace("-colName-", this.PropCapsCount_NumericUpDown.Value > 0 ? dr["ColumnName"].ToString().SetLengthToUpperByStart((int)this.PropCapsCount_NumericUpDown.Value) : dr["ColumnName"].ToString());  //替换列名（属性名）
-                        if (zhuShi.IsNullOrWhiteSpace()) {
-                            codeString.Replace("/// <summary>", "");
-                            codeString.Replace("/// -zhuShi-", "");
-                            codeString.Replace("/// </summary>", "");
-                        } else
-                            codeString.Replace("-zhuShi-", zhuShi);
+                        codeString.Replace("-zhuShi-", zhuShi);
                     }
                     codeString.Append(@"    }
 }");
@@ -532,7 +522,7 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                     break;
                 default:
                     break;
-            }  
+            }
             return codeString.ToString();
         }
 
