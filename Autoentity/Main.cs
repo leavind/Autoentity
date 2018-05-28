@@ -233,7 +233,9 @@ on
             switch (type) {
                 case DataBaseType.SQLServer:
                     #region SQL Server生成实体类代码
-                    codeString.Append($@"using SqlSugar;{(string.IsNullOrWhiteSpace(this.Using_TextBox.Text) ? "" : $"{Environment.NewLine}{this.Using_TextBox.Text.Trim()}")}
+                    codeString.Append($@"
+using SqlSugar;
+using System;{(string.IsNullOrWhiteSpace(this.Using_TextBox.Text) ? "" : $"{Environment.NewLine}{this.Using_TextBox.Text.Trim()}")}
 
 namespace {this.Namespace_TextBox.Text.Trim()}
 {{
@@ -244,18 +246,18 @@ namespace {this.Namespace_TextBox.Text.Trim()}
     {{");
                     var tableInfo = SQLServerHelper.QueryTableInfo(node.Parent.Name, $"select * from {node.Text} where 1=2");
                     DataTable colsInfos = SQLServerHelper.QueryDataTable(node.Parent.Name, "SELECT OBJNAME,VALUE FROM ::FN_LISTEXTENDEDPROPERTY (NULL, 'USER', 'DBO', 'TABLE', '" + node.Text + "', 'COLUMN', DEFAULT)", null);
-                    var getString = this.GetCus_TextBox.Text.Trim();
-                    if (string.IsNullOrWhiteSpace(getString)) {
-                        getString = "return this._-colName-;";
-                    } else {
-                        getString = getString.Replace("属性", "-colName-");
-                    }
-                    var setString = this.SetCus_TextBox.Text.Trim();
-                    if (string.IsNullOrWhiteSpace(setString)) {
-                        setString = "this._-colName- = -value-;";
-                    } else {
-                        setString = setString.Replace("属性", "-colName-");
-                    }
+                    //var getString = this.GetCus_TextBox.Text.Trim();
+                    //if (string.IsNullOrWhiteSpace(getString)) {
+                    //    getString = "return this._-colName-;";
+                    //} else {
+                    //    getString = getString.Replace("属性", "-colName-");
+                    //}
+                    //var setString = this.SetCus_TextBox.Text.Trim();
+                    //if (string.IsNullOrWhiteSpace(setString)) {
+                    //    setString = "this._-colName- = -value-;";
+                    //} else {
+                    //    setString = setString.Replace("属性", "-colName-");
+                    //}
                     foreach (DataRow dr in tableInfo.Rows) {
                         var zhuShi = string.Empty;//列名注释
                         foreach (DataRow uu in colsInfos.Rows) {
@@ -368,9 +370,9 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                         }
                         codeString.Replace("-colName-", this.PropCapsCount_NumericUpDown.Value > 0 ? dr["ColumnName"].ToString().SetLengthToUpperByStart((int)this.PropCapsCount_NumericUpDown.Value) : dr["ColumnName"].ToString());  //替换列名（属性名）
                         if (zhuShi.IsNullOrWhiteSpace()) {
-                            codeString.Replace("/// <summary>", "");
-                            codeString.Replace("/// -zhuShi-", "");
-                            codeString.Replace("/// </summary>", "");
+                            codeString.Replace("        /// <summary>", "");
+                            codeString.Replace("        /// -zhuShi-", "");
+                            codeString.Replace("        /// </summary>", "");
                         } else
                             codeString.Replace("-zhuShi-", zhuShi);
                     }
@@ -515,9 +517,9 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                         }
                         codeString.Replace("-colName-", this.PropCapsCount_NumericUpDown.Value > 0 ? dr["ColumnName"].ToString().SetLengthToUpperByStart((int)this.PropCapsCount_NumericUpDown.Value) : dr["ColumnName"].ToString());  //替换列名（属性名）
                         if (zhuShi.IsNullOrWhiteSpace()) {
-                            codeString.Replace("/// <summary>", "");
-                            codeString.Replace("/// -zhuShi-", "");
-                            codeString.Replace("/// </summary>", "");
+                            codeString.Replace("        /// <summary>", "");
+                            codeString.Replace("        /// -zhuShi-", "");
+                            codeString.Replace("        /// </summary>", "");
                         } else
                             codeString.Replace("-zhuShi-", zhuShi);
                     }
@@ -533,7 +535,8 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                 default:
                     break;
             }
-            return codeString.ToString();
+            return codeString.ToString().Replace("\n\n", "\n").Replace("\n\n", "\n") .Replace("\n\n", "\n")
+                .Replace("\n\n", "\n").Replace("System.String", "string").Replace("System.", "");
         }
 
         private void Using_TextBox_MouseHover(object sender, EventArgs e) {
