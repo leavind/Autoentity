@@ -532,7 +532,7 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                     break;
                 default:
                     break;
-            }
+            }  
             return codeString.ToString();
         }
 
