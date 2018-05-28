@@ -367,7 +367,12 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                             }
                         }
                         codeString.Replace("-colName-", this.PropCapsCount_NumericUpDown.Value > 0 ? dr["ColumnName"].ToString().SetLengthToUpperByStart((int)this.PropCapsCount_NumericUpDown.Value) : dr["ColumnName"].ToString());  //替换列名（属性名）
-                        codeString.Replace("-zhuShi-", zhuShi);
+                        if (zhuShi.IsNullOrWhiteSpace()) {
+                            codeString.Replace("/// <summary>", "");
+                            codeString.Replace("/// -zhuShi-", "");
+                            codeString.Replace("/// </summary>", "");
+                        } else
+                            codeString.Replace("-zhuShi-", zhuShi);
                     }
                     codeString.Append(@"    }
 }");
@@ -509,7 +514,12 @@ namespace {this.Namespace_TextBox.Text.Trim()}
                             }
                         }
                         codeString.Replace("-colName-", this.PropCapsCount_NumericUpDown.Value > 0 ? dr["ColumnName"].ToString().SetLengthToUpperByStart((int)this.PropCapsCount_NumericUpDown.Value) : dr["ColumnName"].ToString());  //替换列名（属性名）
-                        codeString.Replace("-zhuShi-", zhuShi);
+                        if (zhuShi.IsNullOrWhiteSpace()) {
+                            codeString.Replace("/// <summary>", "");
+                            codeString.Replace("/// -zhuShi-", "");
+                            codeString.Replace("/// </summary>", "");
+                        } else
+                            codeString.Replace("-zhuShi-", zhuShi);
                     }
                     codeString.Append(@"    }
 }");
